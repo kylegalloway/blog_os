@@ -12,6 +12,9 @@ spin = "0.4.6"
 version = "1.0"
 features = ["spin_no_std"]
 
+[dev-dependencies]
+array-init = "0.0.3"
+
 # the profile used for the cargo build
 [profile.dev]
 panic = "abort" # disable stack unwinding on panic
