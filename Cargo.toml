@@ -22,3 +22,7 @@ panic = "abort" # disable stack unwinding on panic
 # the profile used for the cargo build --release
 [profile.release]
 panic = "abort" # disable stack unwinding on panic
+
+# replaces the --target x86_64-blog_os.json in the bootimage build command
+[package.metadata.bootimage]
+default-target = "x86_64-blog_os.json"

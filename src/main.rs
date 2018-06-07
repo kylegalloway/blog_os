@@ -1,5 +1,4 @@
-#![feature(lang_items)] // required for defining the panic handler
-#![feature(const_fn)] // allows for functions to be marked as const and called in const scopes
+#![feature(panic_implementation)] // required for defining the panic handler
 #![no_std] // don't link the Rust standard library
 #![cfg_attr(not(test), no_main)] // disable all Rust-level entry points if not testing
 #![cfg_attr(test, allow(dead_code, unused_macros))] // Silence the warnings when testing
@@ -17,18 +16,17 @@ extern crate volatile;
 #[macro_use]
 extern crate lazy_static;
 
+#[cfg(not(test))]
+use core::panic::PanicInfo;
+
 #[macro_use]
 mod vga_buffer;
 
-#[cfg(not(test))] // Only compile when the test flag is not set
-#[lang = "panic_fmt"] // define the function that should be called on panic
+#[cfg(not(test))]
+#[panic_implementation]
 #[no_mangle]
-pub extern "C" fn rust_begin_panic(
-    _msg: core::fmt::Arguments,
-    _file: &'static str,
-    _line: u32,
-    _column: u32,
-) -> ! {
+pub fn panic(info: &PanicInfo) -> ! {
+    println!("{}", info);
     loop {}
 }
 
