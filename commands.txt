@@ -1,0 +1,2 @@
+bootimage run
+bootimage test

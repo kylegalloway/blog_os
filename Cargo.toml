@@ -5,8 +5,10 @@ authors = ["Kyle Galloway <christopher.galloway@hexagon.com>"]
 
 [dependencies]
 rlibc = "1.0"
-volatile = "0.2.3"
 spin = "0.4.6"
+uart_16550 = "0.1.0"
+volatile = "0.2.3"
+x86_64 = "0.2.0"
 
 [dependencies.lazy_static]
 version = "1.0"
