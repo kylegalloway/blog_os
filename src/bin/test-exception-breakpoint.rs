@@ -1,4 +1,3 @@
-#![feature(panic_implementation)]
 #![feature(abi_x86_interrupt)]
 #![no_std]
 #![cfg_attr(not(test), no_main)]
@@ -45,7 +44,7 @@ pub extern "C" fn _start() -> ! {
 
 /// This function is called on panic.
 #[cfg(not(test))]
-#[panic_implementation]
+#[panic_handler]
 #[no_mangle]
 pub fn panic(info: &PanicInfo) -> ! {
     serial_println!("failed");
@@ -58,11 +57,11 @@ pub fn panic(info: &PanicInfo) -> ! {
     loop {}
 }
 
-use x86_64::structures::idt::{ExceptionStackFrame, Idt};
+use x86_64::structures::idt::{ExceptionStackFrame, InterruptDescriptorTable};
 
 lazy_static! {
-    static ref IDT: Idt = {
-        let mut idt = Idt::new();
+    static ref IDT: InterruptDescriptorTable = {
+        let mut idt = InterruptDescriptorTable::new();
         idt.breakpoint.set_handler_fn(breakpoint_handler);
         idt
     };
